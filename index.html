@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic Tac Toe</title>
+    <style type="text/css">
+        .canvasCell{
+            border:dotted 5px #E4FEF2;
+        }
+        .player {
+            border:solid 5px #32FEB4;
+        }
+        .computer{
+            border: solid 5px red;
+        }
+        body{
+            background-color: #191C1B;
+        }
+        .name{
+            color: #B7FEFA;
+            font-size:3.6rem;
+            font-family:sans-serif;
+        }
+        .wrapper{
+            text-align: center;
+
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+<h1 class="name">Tic Tac Toe</h1>
+  <section id="playerWin" style="color: white; display: none;font-size: 3rem;">Player Win</section>
+  <section id="computerWin" style="color: white; display: none;font-size: 3rem;">Computer Win</section>
+  <section id="tie" style="color: white; display: none;font-size: 3rem;">It's A Tie</section>
+<div> 
+    <section>
+        <canvas id="Canvas1" width="150" height="150" class="canvasCell">Your Browser doesnt support canvas</canvas>
+        <canvas id="Canvas2" width="150" height="150" class="canvasCell">Your Browser doesnt support canvas</canvas>
+        <canvas id="Canvas3" width="150" height="150" class="canvasCell">Your Browser doesnt support canvas</canvas>
+    </section>
+
+    <section>
+        <canvas id="Canvas4" width="150" height="150" class="canvasCell">Your Browser doesnt support canvas</canvas>
+        <canvas id="Canvas5" width="150" height="150" class="canvasCell">Your Browser doesnt support canvas</canvas>
+        <canvas id="Canvas6" width="150" height="150" class="canvasCell">Your Browser doesnt support canvas</canvas>
+    </section>
+
+    <section>
+        <canvas id="Canvas7" width="150" height="150" class="canvasCell">Your Browser doesnt support canvas</canvas>
+        <canvas id="Canvas8" width="150" height="150" class="canvasCell">Your Browser doesnt support canvas</canvas>
+        <canvas id="Canvas9" width="150" height="150" class="canvasCell">Your Browser doesnt support canvas</canvas>
+    </section>   
+</div>
+</div>
+<script type="application/javascript" src="game.js"></script>
+</body>
+</html>
