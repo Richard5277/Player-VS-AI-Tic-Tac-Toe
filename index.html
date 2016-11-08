@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Tic Tac Toe</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style type="text/css">
         .canvasCell{
             border:dotted 5px #E4FEF2;
@@ -24,15 +25,32 @@
             text-align: center;
 
         }
+        .win{
+            display: none;
+            color: white; 
+            font-size: 5rem;
+            color: red;
+            line-height: 1.2rem;
+        }
+        .chosenLevel{
+            font-size: 5rem;
+            background-color: blue;
+        }
     </style>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <body>
 <div class="wrapper">
 <h1 class="name">Tic Tac Toe</h1>
-  <section id="playerWin" style="color: white; display: none;font-size: 3rem;">Player Win</section>
-  <section id="computerWin" style="color: white; display: none;font-size: 3rem;">Computer Win</section>
-  <section id="tie" style="color: white; display: none;font-size: 3rem;">It's A Tie</section>
+    <section>
+        <button class="btn-danger" id="easyLevel">Easy</button>
+        <button class="btn-danger" id="mediumLevel">Medium</button>
+        <button class="btn-danger" id="hardLevel">Hard</button>
+    </section><br><br>
+    <section id="playerWin" class="win">Player Win !!!</section>
+    <section id="computerWin" class="win">Computer Win !!!</section>
+    <section id="tie" class="win">It's A Tie !!!</section><br><br>
 <div> 
     <section>
         <canvas id="Canvas1" width="150" height="150" class="canvasCell">Your Browser doesnt support canvas</canvas>

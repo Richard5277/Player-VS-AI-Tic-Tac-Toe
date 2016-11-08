@@ -1,8 +1,11 @@
 
 var canvasArray = ["Canvas1", "Canvas2", "Canvas3", "Canvas4", "Canvas5", "Canvas6", "Canvas7", "Canvas8", "Canvas9"];
 var totalNumber = canvasArray.length;
-var playerArray = [];
-var computerArray = [];
+var playerWin = false;
+var computerWin = false;
+var isTie = false;
+var keepGoing = true;
+var level;
 
 var winArray = [
 	["Canvas1","Canvas2","Canvas3"],
@@ -43,9 +46,25 @@ var winAlertArray = [
 
 ]
 
-function checkWinning(){ 
-	if(totalNumber > 0){
-		for(var i =0; i<8; i++){
+$('#easyLevel').on('click',function(e){
+	level = "easy";
+	$(this).siblings().removeClass("chosenLevel");
+	$(this).addClass("chosenLevel");
+})
+$('#mediumLevel').on('click',function(e){
+	level = "medium";
+	$(this).siblings().removeClass("chosenLevel");
+	$(this).addClass("chosenLevel");
+})
+$('#hardLevel').on('click',function(e){
+	level = "hard";
+	$(this).siblings().removeClass("chosenLevel");
+	$(this).addClass("chosenLevel");
+})
+
+function checkWinning(){
+
+	for(var i =0; i<8; i++){
 
 			var object0 = winArray[i][0];
 			var object1 = winArray[i][1];
@@ -54,19 +73,37 @@ function checkWinning(){
 			var object0ID = "#" + object0; 
 			var object1ID = "#" + object1; 
 			var object2ID = "#" + object2;
-			
-			if($(object0ID).hasClass("player") && $(object1ID).hasClass("player") && $(object2ID).hasClass("player") ){
-				$("#Canvas1,#Canvas2,#Canvas3,#Canvas4,#Canvas5,#Canvas6,#Canvas7,#Canvas8,#Canvas9").off('click');
-				$("#playerWin").css("display", "block");
-			}
 
-			if($(object0ID).hasClass("computer") && $(object1ID).hasClass("computer") && $(object2ID).hasClass("computer") ){
-				$("#Canvas1,#Canvas2,#Canvas3,#Canvas4,#Canvas5,#Canvas6,#Canvas7,#Canvas8,#Canvas9").off('click');
-				$("#computerWin").css("display", "block");
-			}
+			if(totalNumber > 0){
+				if($(object0ID).hasClass("player") && $(object1ID).hasClass("player") && $(object2ID).hasClass("player") ){
+					playerWin = true;
+					keepGoing = false;
+				}
+
+				if($(object0ID).hasClass("computer") && $(object1ID).hasClass("computer") && $(object2ID).hasClass("computer") ){
+					computerWin = true;
+					keepGoing = false;
+				}
+			}else{
+				if($(object0ID).hasClass("player") && $(object1ID).hasClass("player") && $(object2ID).hasClass("player") ){
+					playerWin = true;
+					keepGoing = false;
+				}else{
+					isTie = true;
+				}
 		}
-	}else{
-		$("#tie").css("display", "block");	
+	}
+
+	if(playerWin){
+		$("#Canvas1,#Canvas2,#Canvas3,#Canvas4,#Canvas5,#Canvas6,#Canvas7,#Canvas8,#Canvas9").off('click');
+		$("#playerWin").css("display", "block");
+		keepGoing = false;
+	}else if(computerWin){
+		$("#Canvas1,#Canvas2,#Canvas3,#Canvas4,#Canvas5,#Canvas6,#Canvas7,#Canvas8,#Canvas9").off('click');
+		$("#computerWin").css("display", "block");
+		keepGoing = false;
+	}else if(isTie){
+		$("#tie").css("display", "block");
 	}
 }
 
@@ -92,15 +129,13 @@ function drawCross(target){
 	}
 	target.addClass("chosen");
 	target.addClass("player");
-	playerArray.push(target[0]['id']);
 	totalNumber --;
-	playerArray.sort();
 	
 	checkWinning();
 
 }
 
-function drawCircle(target){
+function drawCircleEasy(target){
 	var ctx = target[0].getContext("2d");
 		if(ctx){
 			ctx.beginPath();
@@ -113,9 +148,7 @@ function drawCircle(target){
 		target.addClass("chosen");
 		target.addClass("computer");
 		
-		computerArray.push(target[0]['id']);
 		totalNumber --;
-		computerArray.sort();
 
 		checkWinning();
 }
@@ -130,12 +163,15 @@ $("#Canvas1,#Canvas2,#Canvas3,#Canvas4,#Canvas5,#Canvas6,#Canvas7,#Canvas8,#Canv
 		console.log("Taken");	
 	}else{
 		drawCross($(this));
+		console.log(keepGoing);
 		canvasArray.splice( canvasArray.indexOf($(this)[0]['id']) , 1);
 		var newSplice = canvasArray[getRandom(canvasArray)];
 		var newID = "#" + newSplice;
-		if(totalNumber > 0){
-			drawCircle($(newID));
+		if(keepGoing == true){
+			if(totalNumber > 0){
+			drawCircleEasy($(newID));
 			canvasArray.splice( canvasArray.indexOf(newSplice) ,1);
+			}
 		}
 	}
 })
