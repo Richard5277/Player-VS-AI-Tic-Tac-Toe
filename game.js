@@ -12,6 +12,8 @@ var computerHasToStopPlayer = false;
 var computerStoppingPlayerTargetID;
 var level = "";
 
+var possibleWinArray = [];
+
 var winArray = [
 	["Canvas1","Canvas2","Canvas3"],
 	["Canvas4","Canvas5","Canvas6"],
@@ -105,6 +107,7 @@ function computerCheckWinning() {
 	}
 }
 
+
 function computerStoppingPlayer() {
 	for(var i =0; i<8; i++) {
 		var object0 = winArray[i][0];
@@ -127,6 +130,25 @@ function computerStoppingPlayer() {
 		}
 
 	}
+}
+
+function generatePossibleWinArray(target) {
+	var oneCheck = [];
+	for(var i=0;i<8;i++){
+		var temp = [];
+		for(var j=0;j<3;j++) {
+			if(winArray[i][j] == target[0]['id']) {
+				temp = temp.concat(winArray[i]);
+				oneCheck = oneCheck.concat(temp);
+			}
+		}
+	}
+	for(var k=0;k<oneCheck.length;k++){
+		if(oneCheck[k] == target[0]['id']){
+			oneCheck.splice(oneCheck.indexOf(target[0]['id']) , 1);
+		}
+	}
+	possibleWinArray.push(oneCheck);
 }
 
 function drawCross(target){
@@ -152,7 +174,9 @@ function drawCross(target){
 	takenArray.push(target[0]);
 	target.addClass("player");
 	totalNumber --;
-	
+
+	generatePossibleWinArray(target);
+
 	checkWinning();
 
 }
@@ -233,6 +257,29 @@ $("#Canvas1,#Canvas2,#Canvas3,#Canvas4,#Canvas5,#Canvas6,#Canvas7,#Canvas8,#Canv
 						if(computerGoForWin == true) {
 							drawCircle($(computerGoForWinTargetID));
 						}else{
+
+							console.log(possibleWinArray);
+							if(possibleWinArray.length>1){
+								for(var i=0;i<possibleWinArray.length;i++){
+									for(var j=0;j<possibleWinArray[i].length;j++){
+										var target = possibleWinArray[i][j];
+										var nextRowNumber = i + 1;
+										// console.log(nextRowNumber);
+										console.log(possibleWinArray);
+										var nextRow = possibleWinArray[nextRowNumber];
+										// console.log(nextRow);
+										for(var k = 0;k < nextRow.length;k++){
+											if(target == possibleWinArray[i+1][k] && $("#"+possibleWinArray[i+1][k]).hasClass("computer") == false ){
+												// console.log(target);
+											}
+										}
+									}
+								}
+							}else{
+								console.log("Need More Choice");
+							}
+
+
 							// check player choice, stop player from winning
 							computerStoppingPlayer();
 							if(computerHasToStopPlayer){
